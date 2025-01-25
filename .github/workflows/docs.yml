@@ -1,7 +1,8 @@
 name: docs
 on:
   push:
-    branches: [main]
+    branches_ignore:
+      - 'docs'
 
 jobs:
   docs:
@@ -9,10 +10,10 @@ jobs:
 
     steps:
       - name: checkout
-        uses: actions/checkout@v3
+        uses: actions/checkout@v4
 
       - name: setup-zig
-        uses: goto-bus-stop/setup-zig@v2
+        uses: mlugg/setup-zig@v1
 
       - name: build
         run: zig build docs
