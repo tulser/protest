@@ -14,6 +14,8 @@ jobs:
 
       - name: setup-zig
         uses: mlugg/setup-zig@v1
+        with:
+          version: master
 
       - name: build
         run: zig build docs

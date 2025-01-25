@@ -17,6 +17,8 @@ jobs:
 
       - name: setup-zig
         uses: mlugg/setup-zig@v1
+        with:
+          version: master
 
       - name: lint
         run: |
@@ -36,6 +38,8 @@ jobs:
 
       - name: setup-zig
         uses: mlugg/setup-zig@v1
+        with:
+          version: master
 
       - name: build
         run: zig build
@@ -60,6 +64,8 @@ jobs:
 
       - name: setup-zig
         uses: mlugg/setup-zig@v1
+        with:
+          version: master
 
       - name: build
         run: |
