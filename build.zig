@@ -17,12 +17,17 @@ pub fn build(b: *std.Build) void {
     {
         const test_step = b.step("test", "Run tests");
         const test_require_step = b.step("test-require", "Run require tests");
+        // For LSP checking.
+        const check_step = b.step("check", "LSP compile check step");
+        check_step.dependOn(test_step);
 
         const t_require = b.addTest(.{
             .name = "require test",
-            .root_source_file = b.path("src/require.zig"),
-            .target = target,
-            .optimize = optimize,
+            .root_module = b.createModule(.{
+                .root_source_file = b.path("src/require.zig"),
+                .target = target,
+                .optimize = optimize,
+            }),
         });
         test_require_step.dependOn(&b.addRunArtifact(t_require).step);
         test_step.dependOn(test_require_step);
@@ -34,9 +39,11 @@ pub fn build(b: *std.Build) void {
 
         const doc_obj = b.addObject(.{
             .name = "docs",
-            .root_source_file = b.path(package_path),
-            .target = target,
-            .optimize = optimize,
+            .root_module = b.createModule(.{
+                .root_source_file = b.path(package_path),
+                .target = target,
+                .optimize = optimize,
+            }),
         });
 
         const install_docs = b.addInstallDirectory(.{
